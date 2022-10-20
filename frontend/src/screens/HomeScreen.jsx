@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import Loader from '../components/Loader'
@@ -10,6 +10,7 @@ import { getPosts } from '../actions/postActions'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -18,10 +19,12 @@ const HomeScreen = () => {
   const { loading, error, posts } = postList
 
   useEffect(() => {
-    if (userInfo && userInfo.id) {
+    if (!userInfo || !userInfo.id) {
+      navigate('/')
+    } else {
       dispatch(getPosts())
     }
-  }, [userInfo, dispatch])
+  }, [userInfo, dispatch, navigate])
 
   return (
     <>

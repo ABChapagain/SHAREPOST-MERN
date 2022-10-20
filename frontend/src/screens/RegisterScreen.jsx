@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button, Form, Row, Col } from 'react-bootstrap'
 import FormContainer from '../components/FormContainer'
 import { useDispatch, useSelector } from 'react-redux'
-import Loader from '../components/Loader'
-import Message from '../components/Message'
 import { register } from '../actions/userActions'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
@@ -106,8 +104,8 @@ const RegisterScreen = () => {
           />
         </Form.Group>
 
-        <Button type='submit' variant='primary'>
-          Login
+        <Button type='submit' variant='primary' disabled={loading}>
+          Register
         </Button>
       </Form>
       <Row className='py-3'>

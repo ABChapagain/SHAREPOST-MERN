@@ -36,7 +36,8 @@ const PostEdit = () => {
       navigate('/')
     } else {
       if (successUpdate) {
-        navigate('/')
+        toast.success('Post updated successfully.😊')
+        navigate(`/post/${postId}`)
         dispatch({ type: POST_UPDATE_RESET })
       } else {
         if (!post || post._id !== postId) {

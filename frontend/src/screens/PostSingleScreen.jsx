@@ -43,6 +43,7 @@ export const PostSingleScreen = () => {
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
       dispatch(deletePost(id))
+      toast.success('Post deleted successfully.😭')
     }
   }
 

@@ -6,7 +6,6 @@ import FormContainer from '../components/FormContainer'
 import Loader from '../components/Loader'
 import { toast } from 'react-toastify'
 import { login } from '../actions/userActions'
-import { USER_LOGIN_RESET } from '../constants/userConstants'
 
 const LoginScreen = () => {
   // State
@@ -71,7 +70,7 @@ const LoginScreen = () => {
             onClick={(e) => setShowPassword(e.target.checked)}
           />
         </Form.Group>
-        <Button type='submit' variant='primary'>
+        <Button type='submit' variant='primary' disabled={loading}>
           Login
         </Button>
       </Form>

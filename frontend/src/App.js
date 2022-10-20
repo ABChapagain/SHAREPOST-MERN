@@ -10,9 +10,25 @@ import { PostSingleScreen } from './screens/PostSingleScreen'
 import CreatePost from './screens/CreatePost'
 import PostEdit from './screens/PostEdit'
 
+// react-toastify
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 function App() {
   return (
     <Router>
+      <ToastContainer
+        position='top-right'
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
       <Header />
       <Container>
         <main className='py-3'>

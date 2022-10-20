@@ -6,7 +6,7 @@ import Post from '../models/postModel.js'
 // Access   Private
 
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({})
+  const posts = await Post.find({}).populate('user', 'id name email')
 
   res.json(posts)
 })
@@ -40,7 +40,7 @@ const createPost = asyncHandler(async (req, res) => {
   const post = new Post({
     title,
     description,
-    // user: req.user._id,
+    user: req.user._id,
   })
 
   const createdPost = await post.save()

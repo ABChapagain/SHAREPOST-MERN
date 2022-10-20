@@ -13,7 +13,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (userExists) {
     res.status(401)
-    throw new Error('Email already exists')
+    throw new Error('Email already exists.😄')
   }
   const user = await User.create({ name, email, password })
 
@@ -25,7 +25,7 @@ const registerUser = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(400)
-    throw new Error('Invalid User Data')
+    throw new Error('Invalid User Data.😞')
   }
 })
 
@@ -38,7 +38,7 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email }).select('+password')
 
-  if (user && password) {
+  if (user && (await user.matchPassword(password))) {
     res.json({
       id: user._id,
       name: user.name,
@@ -47,7 +47,7 @@ const authUser = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(401)
-    throw new Error('Invalid Credentials')
+    throw new Error('Invalid Credentials.😞')
   }
 })
 

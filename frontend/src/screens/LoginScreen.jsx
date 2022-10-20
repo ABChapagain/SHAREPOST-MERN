@@ -1,19 +1,50 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, Form, Row, Col } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import Loader from '../components/Loader'
+import { toast } from 'react-toastify'
+import { login } from '../actions/userActions'
+import { USER_LOGIN_RESET } from '../constants/userConstants'
+
 const LoginScreen = () => {
+  // State
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  // Global state
+  const userLogin = useSelector((state) => state.userLogin)
+  const { loading, success, error, userInfo } = userLogin
+
+  useEffect(() => {
+    if (userInfo && userInfo.id) {
+      navigate('/')
+    }
+    if (success) {
+      toast.success('Login is successful.❤️')
+    } else if (error) {
+      toast.error(error)
+    }
+  }, [navigate, userInfo, success, error])
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!email || !password) {
+      toast.error('All fields are required.😞')
+    } else {
+      dispatch(login(email, password))
+    }
   }
 
   return (
     <FormContainer>
       <h1>Sign In</h1>
+      {loading && <Loader />}
       <Form className='mt-4' onSubmit={handleSubmit}>
         <Form.Group className='mb-3' controlId='email'>
           <Form.Label>Email address</Form.Label>
@@ -46,8 +77,7 @@ const LoginScreen = () => {
       </Form>
       <Row className='py-3'>
         <Col md={6}>
-          New Customer?{' '}
-          <Link to='/register'>Register</Link>
+          New Customer? <Link to='/register'>Register</Link>
         </Col>
       </Row>
     </FormContainer>

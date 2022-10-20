@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { POST_LIST_RESET } from '../constants/postConstants'
+import { POST_CREATE_RESET, POST_DETAILS_RESET, POST_LIST_RESET } from '../constants/postConstants'
 
 import {
   USER_REGISTER_REQUEST,
@@ -78,4 +78,6 @@ export const logout = () => async (dispatch) => {
   localStorage.removeItem('userInfo')
   dispatch({ type: USER_LOGOUT })
   dispatch({ type: POST_LIST_RESET })
+  dispatch({ type: POST_CREATE_RESET })
+  dispatch({ type: POST_DETAILS_RESET })
 }

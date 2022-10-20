@@ -6,7 +6,9 @@ import Post from '../models/postModel.js'
 // Access   Private
 
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({}).populate('user', 'id name email')
+  const posts = await Post.find({})
+    .populate('user', 'id name email')
+    .sort({ createdAt: -1 })
 
   res.json(posts)
 })
@@ -16,7 +18,10 @@ const getPosts = asyncHandler(async (req, res) => {
 // Access   Private
 
 const getPostById = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id)
+  const post = await Post.findById(req.params.id).populate(
+    'user',
+    'id name email'
+  )
 
   if (post) {
     res.json(post)

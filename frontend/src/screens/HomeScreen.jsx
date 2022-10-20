@@ -34,7 +34,9 @@ const HomeScreen = () => {
             </Link>
           </div>
 
-          {!posts ? (
+          {loading && <Loader />}
+          {error && toast.error(error)}
+          {posts.length === 0 ? (
             <div
               className='justify-content-center align-items-center d-flex text-center'
               style={{ height: '400px' }}
@@ -42,30 +44,27 @@ const HomeScreen = () => {
               <h4>No posts available.</h4>
             </div>
           ) : (
-            <>
-              {loading && <Loader />}
-              {error && toast.error(error)}
-              {posts.map((post) => (
-                <Card key={post._id} className='my-3'>
-                  <Card.Body>
-                    <h3 className='mb-3'>{post.title}</h3>
-                    <p className='bg-dark text-light px-3 py-1'>
-                      Written by {post.user.name} on{' '}
-                      {post.createdAt.substring(0, 10)} Email:                       <a
-                        className='text-decoration-none text-light'
-                        href={`mailto: ${post.user.email}`}
-                      >
-                        {post.user.email}
-                      </a>
-                    </p>
-                    <Card.Text>{post.description}</Card.Text>
-                    <Link to={`post/${post._id}`}>
-                      <Button type='button'>More</Button>
-                    </Link>
-                  </Card.Body>
-                </Card>
-              ))}
-            </>
+            posts.map((post) => (
+              <Card key={post._id} className='my-3'>
+                <Card.Body>
+                  <h3 className='mb-3'>{post.title}</h3>
+                  <p className='bg-dark text-light px-3 py-1'>
+                    Written by {post.user.name} on{' '}
+                    {post.createdAt.substring(0, 10)} Email:{' '}
+                    <a
+                      className='text-decoration-none text-light'
+                      href={`mailto: ${post.user.email}`}
+                    >
+                      {post.user.email}
+                    </a>
+                  </p>
+                  <Card.Text>{post.description}</Card.Text>
+                  <Link to={`post/${post._id}`}>
+                    <Button type='button'>More</Button>
+                  </Link>
+                </Card.Body>
+              </Card>
+            ))
           )}
         </>
       ) : (
